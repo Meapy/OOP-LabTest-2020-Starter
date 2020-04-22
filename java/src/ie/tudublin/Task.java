@@ -38,4 +38,8 @@ public class Task {
     public Task(TableRow tr){
         this(tr.getString("Task"), tr.getInt("Start"), tr.getInt("End"));
     }
+    @Override
+    public String toString() {
+        return "Name of the task = " + Task + ", Start = " + Start + ", End = " + End;
+    }
 }

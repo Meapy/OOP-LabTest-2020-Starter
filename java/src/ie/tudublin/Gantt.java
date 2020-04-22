@@ -32,7 +32,7 @@ public class Gantt extends PApplet
 	}
 
 	public void displayTasks(){
-		
+
 	}
 	
 	public void mousePressed()
