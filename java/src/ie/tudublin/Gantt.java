@@ -19,13 +19,19 @@ public class Gantt extends PApplet
 	{
 		Table table = loadTable("tasks.csv","header");
 		for(TableRow row:table.rows()){
-			Task p = new Task(row);
-			tasks.add(p);
+			Task t = new Task(row);
+			tasks.add(t);
 		}
 	}
 
 	public void printTasks()
 	{
+		for(Task t:tasks){
+			System.out.println(t);
+		}
+	}
+
+	public void displayTasks(){
 		
 	}
 	
@@ -43,6 +49,8 @@ public class Gantt extends PApplet
 	
 	public void setup() 
 	{
+		loadTasks();
+		printTasks();
 	}
 	
 	public void draw()
