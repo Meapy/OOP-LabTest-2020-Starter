@@ -41,13 +41,13 @@ public class Gantt extends PApplet{
 		for (int i = 1; i <= totalDays; i++) {
 
 			x = map(i, 1, 30, this.leftGap, this.width - this.Gap);
-			line(x, Gap, x, this.height - this.Gap); // draws horizontal lines
+			line(x, Gap, x, this.height - this.Gap); // draws vertical lines
 			textSize(10); // make the number text smaller
 			text(i, x, Gap * 0.9f);
 		}
 
-		line(161, 53, 747, 53); // top vertical line
-		line(160,   548, 747, 548); // bottom vertical line
+		line(161, 53, 747, 53); // top horizontal line
+		line(160,   548, 747, 548); // bottom horizontal line
 
 		float y;
 		float start, end, rectWidth;
