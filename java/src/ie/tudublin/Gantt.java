@@ -40,9 +40,9 @@ public class Gantt extends PApplet{
 		stroke(255);
 		for (int i = 1; i <= totalDays; i++) {
 
-			x = map(i, 1, 30, leftGap, this.width - Gap);
-			line(x, Gap, x, this.height - Gap); // draws horizontal lines
-			textSize(10);
+			x = map(i, 1, 30, this.leftGap, this.width - this.Gap);
+			line(x, Gap, x, this.height - this.Gap); // draws horizontal lines
+			textSize(10); // make the number text smaller
 			text(i, x, Gap * 0.9f);
 		}
 
@@ -56,17 +56,17 @@ public class Gantt extends PApplet{
 
 		for (int i = 0; i < tasks.size(); i++){
 			fill(255);
-			start = map(tasks.get(i).getStart(), 1, totalDays, leftGap, this.width - Gap);
-			end = map(tasks.get(i).getEnd(), 1, totalDays, leftGap, this.width - Gap);
+			start = map(tasks.get(i).getStart(), 1, totalDays, this.leftGap, this.width - Gap); //used to find where the rectangle starts
+			end = map(tasks.get(i).getEnd(), 1, totalDays, this.leftGap, this.width - Gap); // where it ends//
 			rectWidth = end - start;
-			y = map(i, 0, tasks.size(), 2 * Gap, this.height - Gap);
+			y = map(i, 0, tasks.size(), 2 * this.Gap, this.height - this.Gap);
 
-			textSize(20);
+			textSize(20); //make the task names bigger font
 			text(tasks.get(i).getTask(), Gap, y);
 
 			colour = map(i, 0, tasks.size(), i, 255);
 			fill(colour, 255, 255);
-			rect(start, y - (RectHeight / 2), rectWidth, RectHeight, 5);
+			rect(start, y - (this.RectHeight / 2), rectWidth, this.RectHeight, 5);
 		}
 	}
 
