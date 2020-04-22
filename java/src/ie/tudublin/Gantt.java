@@ -6,16 +6,19 @@ import processing.data.TableRow;
 
 import java.util.ArrayList;
 
-public class Gantt extends PApplet {
-	ArrayList<Task> tasks = new ArrayList<Task>();
+public class Gantt extends PApplet{
+	ArrayList<Task> tasks = new ArrayList<>();
+	float RectHeight = 50;
 	private float leftGap;
 	private float Gap;
+	private int left = 0;
+	private int right = 0;
 
 	public void settings() {
 		size(800, 600);
 	}
 
-	public void loadTasks() {
+	public void loadTasks(){
 		Table table = loadTable("tasks.csv", "header");
 		for (TableRow row : table.rows()) {
 			Task t = new Task(row);
@@ -46,8 +49,7 @@ public class Gantt extends PApplet {
 		line(161, 53, 747, 53); // top vertical line
 		line(160,   548, 747, 548); // bottom vertical line
 
-		float y = 10;
-		float RectHeight = 50;
+		float y;
 		float start, end, rectWidth;
 		float colour;
 		noStroke();
@@ -70,18 +72,62 @@ public class Gantt extends PApplet {
 
 	public void mousePressed() {
 		println("Mouse pressed");
+		float x1, x2, y1, y2;
+		float pixelsMoved = 20;
+		for(int i = 0; i < tasks.size(); i++)
+		{
+			Task task = tasks.get(i);
+			x1 = map(task.getStart(), 1, 30, this.leftGap, this.width - Gap);
+			x2 = map(task.getEnd(), 1, 30, this.leftGap, this.width - Gap);
+			y1 = map(i, 0, tasks.size(), 2 * this.Gap, this.height - Gap) - this.RectHeight / 2;
+			y2 = y1 + this.RectHeight;
+
+			if(mouseY >= y1 && mouseY <= y2)
+			{
+				if(mouseX < x1 + pixelsMoved && mouseX > x1 - pixelsMoved)
+				{
+					this.left = i;
+					this.right = -1;
+				}
+				else if(mouseX < x2 + pixelsMoved && mouseX > x2 - pixelsMoved)
+				{
+					this.left = -1;
+					this.right = i;
+				}
+			}
+		}
 	}
 
 	public void mouseDragged() {
 		println("Mouse dragged");
+		int day;
+
+		if(this.left > -1)
+		{
+			Task task = tasks.get(this.left);
+			day = (int) map(mouseX, 0, this.width, 0, 30);
+			if(day > 0 && day < task.getEnd() && task.getEnd() - day >= 1)
+			{
+				task.setStart(day);
+			}
+		}
+		else if(this.right > -1)
+		{
+			Task task = tasks.get(this.right);
+			day = (int) map(mouseX, 0, this.width, 0, 30);
+			if(day <= 30 && day > task.getStart() && day - task.getStart() >= 1)
+			{
+				task.setEnd(day);
+			}
+		}
 	}
 
 
 	public void setup(){
 		loadTasks();
 		printTasks();
-		leftGap = width / 5;
-		Gap = width / 15;
+		leftGap = width / 5f;
+		Gap = width / 15f;
 	}
 	
 	public void draw(){
